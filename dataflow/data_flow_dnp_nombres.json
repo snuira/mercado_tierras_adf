@@ -18,13 +18,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "source2"
-				},
-				{
-					"dataset": {
-						"referenceName": "teletrabajo_tunja",
-						"type": "DatasetReference"
-					},
-					"name": "source3"
 				}
 			],
 			"sinks": [
@@ -50,7 +43,7 @@
 					"name": "DerivedColumn4"
 				}
 			],
-			"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source3\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nDerivedColumn4 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nDerivedColumn4 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
