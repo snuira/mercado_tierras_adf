@@ -4,7 +4,7 @@
 		"description": "Transacciones inmobiliarias",
 		"activities": [
 			{
-				"name": "Copy_q9p",
+				"name": "Copy_SNR_Transacciones",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
