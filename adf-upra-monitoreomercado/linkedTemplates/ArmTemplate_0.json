@@ -595,21 +595,102 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_b8y')]",
+			"name": "[concat(parameters('factoryName'), '/Json3')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "FileServer1",
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"type": "string"
+						},
+						"Fecha": {
+							"type": "string"
+						},
+						"Nombres": {
+							"type": "string"
+						},
+						"Apellidos": {
+							"type": "string"
+						},
+						"Edad": {
+							"type": "string"
+						},
+						"Genero": {
+							"type": "string"
+						},
+						"Discapacidad": {
+							"type": "string"
+						},
+						"Tipo_discapacidad": {
+							"type": "string"
+						},
+						"Nivel_educacion": {
+							"type": "string"
+						},
+						"Ingles": {
+							"type": "string"
+						},
+						"Cursos": {
+							"type": "string"
+						},
+						"Informatica": {
+							"type": "string"
+						},
+						"Certificacion_competencias": {
+							"type": "string"
+						},
+						"Laborando": {
+							"type": "string"
+						},
+						"Organizacion": {
+							"type": "string"
+						},
+						"Teletrabajado": {
+							"type": "string"
+						},
+						"Internet": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
-						"type": "FileServerLocation",
-						"fileName": "RANGOS_CEDULA.csv",
-						"folderPath": "Entregable/Punto002"
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.tab",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
@@ -618,132 +699,13 @@
 				},
 				"schema": [
 					{
-						"name": "COD_NATURALEZA",
-						"type": "String"
-					},
-					{
-						"name": "NATURALEZA_JURIDICA",
-						"type": "String"
-					},
-					{
-						"name": "ROL",
-						"type": "String"
-					},
-					{
-						"name": "PERSONA",
-						"type": "String"
-					},
-					{
-						"name": "TIPO_DOCUMENTO",
-						"type": "String"
-					},
-					{
-						"name": "NUMERO_DOCUMENTO",
-						"type": "String"
-					},
-					{
-						"name": "RANGOS_CEDULA_SEXO",
+						"name": "ID\tFecha\tNombres\tApellidos\tEdad\tGenero\tDiscapacidad\tTipo_discapacidad\tNivel_educacion\tIngles\tCursos\tInformatica\tCertificacion_competencias\tLaborando\tOrganizacion\tTeletrabajado\tInternet",
 						"type": "String"
 					}
 				]
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_dzt')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Hoja2",
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx",
-						"folderPath": "Entregable/otros/tunja"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "ID",
-						"type": "String"
-					},
-					{
-						"name": "Fecha",
-						"type": "String"
-					},
-					{
-						"name": "Nombres",
-						"type": "String"
-					},
-					{
-						"name": "Apellidos",
-						"type": "String"
-					},
-					{
-						"name": "Edad",
-						"type": "String"
-					},
-					{
-						"name": "Genero",
-						"type": "String"
-					},
-					{
-						"name": "Discapacidad",
-						"type": "String"
-					},
-					{
-						"name": "Tipo_discapacidad",
-						"type": "String"
-					},
-					{
-						"name": "Nivel_educacion",
-						"type": "String"
-					},
-					{
-						"name": "Ingles",
-						"type": "String"
-					},
-					{
-						"name": "Cursos",
-						"type": "String"
-					},
-					{
-						"name": "Informatica",
-						"type": "String"
-					},
-					{
-						"name": "Certificacion_competencias",
-						"type": "String"
-					},
-					{
-						"name": "Laborando",
-						"type": "String"
-					},
-					{
-						"name": "Organizacion",
-						"type": "String"
-					},
-					{
-						"name": "Teletrabajado",
-						"type": "String"
-					},
-					{
-						"name": "Internet",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
 			]
 		}
 	]
