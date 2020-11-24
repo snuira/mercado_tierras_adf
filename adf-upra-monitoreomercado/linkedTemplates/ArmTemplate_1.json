@@ -13,6 +13,46 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_lhk')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"folderPath": "Entregable/Punto006"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_na8')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"folderPath": "Entregable/Punto003"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_ot1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -571,7 +611,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_na8')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Copy_SNR_GEO')]",
@@ -644,7 +686,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_lhk')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Personas')]",
@@ -796,6 +840,233 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_q9p')]"
 			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_Tunja_Personas')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy_Tunja_Personas",
+				"activities": [
+					{
+						"name": "Copy_dzt",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "Entregable/otros/tunja/BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx"
+							},
+							{
+								"name": "Destination",
+								"value": "raw/OTROS/ALCALDIA_TUNJA/TELETRABAJO/BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": false
+								}
+							},
+							"sink": {
+								"type": "JsonSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "JsonWriteSettings",
+									"filePattern": "arrayOfObjects"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "ID",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['ID']"
+										}
+									},
+									{
+										"source": {
+											"name": "Fecha",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Fecha']"
+										}
+									},
+									{
+										"source": {
+											"name": "Nombres",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Nombres']"
+										}
+									},
+									{
+										"source": {
+											"name": "Apellidos",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Apellidos']"
+										}
+									},
+									{
+										"source": {
+											"name": "Edad",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Edad']"
+										}
+									},
+									{
+										"source": {
+											"name": "Genero",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Genero']"
+										}
+									},
+									{
+										"source": {
+											"name": "Discapacidad",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Discapacidad']"
+										}
+									},
+									{
+										"source": {
+											"name": "Tipo_discapacidad",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Tipo_discapacidad']"
+										}
+									},
+									{
+										"source": {
+											"name": "Nivel_educacion",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Nivel_educacion']"
+										}
+									},
+									{
+										"source": {
+											"name": "Ingles",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Ingles']"
+										}
+									},
+									{
+										"source": {
+											"name": "Cursos",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Cursos']"
+										}
+									},
+									{
+										"source": {
+											"name": "Informatica",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Informatica']"
+										}
+									},
+									{
+										"source": {
+											"name": "Certificacion_competencias",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Certificacion_competencias']"
+										}
+									},
+									{
+										"source": {
+											"name": "Laborando",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Laborando']"
+										}
+									},
+									{
+										"source": {
+											"name": "Organizacion",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Organizacion']"
+										}
+									},
+									{
+										"source": {
+											"name": "Teletrabajado",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Teletrabajado']"
+										}
+									},
+									{
+										"source": {
+											"name": "Internet",
+											"type": "String"
+										},
+										"sink": {
+											"path": "$['Internet']"
+										}
+									}
+								]
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_dzt",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_dzt",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ETL_nombres')]",
