@@ -102,10 +102,11 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
 						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
 						"fileSystem": "raw"
 					},
+					"encodingName": "UTF-16",
 					"sheetName": "Hoja2"
 				},
 				"schema": {}
@@ -286,6 +287,166 @@
 					"quoteChar": "\""
 				},
 				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"type": "string"
+						},
+						"Fecha": {
+							"type": "string"
+						},
+						"Nombres": {
+							"type": "string"
+						},
+						"Apellidos": {
+							"type": "string"
+						},
+						"Edad": {
+							"type": "string"
+						},
+						"Genero": {
+							"type": "string"
+						},
+						"Discapacidad": {
+							"type": "string"
+						},
+						"Tipo_discapacidad": {
+							"type": "string"
+						},
+						"Nivel_educacion": {
+							"type": "string"
+						},
+						"Ingles": {
+							"type": "string"
+						},
+						"Cursos": {
+							"type": "string"
+						},
+						"Informatica": {
+							"type": "string"
+						},
+						"Certificacion_competencias": {
+							"type": "string"
+						},
+						"Laborando": {
+							"type": "string"
+						},
+						"Organizacion": {
+							"type": "string"
+						},
+						"Teletrabajado": {
+							"type": "string"
+						},
+						"Internet": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"type": "string"
+						},
+						"Fecha": {
+							"type": "string"
+						},
+						"Nombres": {
+							"type": "string"
+						},
+						"Apellidos": {
+							"type": "string"
+						},
+						"Edad": {
+							"type": "string"
+						},
+						"Genero": {
+							"type": "string"
+						},
+						"Discapacidad": {
+							"type": "string"
+						},
+						"Tipo_discapacidad": {
+							"type": "string"
+						},
+						"Nivel_educacion": {
+							"type": "string"
+						},
+						"Ingles": {
+							"type": "string"
+						},
+						"Cursos": {
+							"type": "string"
+						},
+						"Informatica": {
+							"type": "string"
+						},
+						"Certificacion_competencias": {
+							"type": "string"
+						},
+						"Laborando": {
+							"type": "string"
+						},
+						"Organizacion": {
+							"type": "string"
+						},
+						"Teletrabajado": {
+							"type": "string"
+						},
+						"Internet": {
+							"type": "string"
+						}
+					}
+				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
@@ -577,114 +738,6 @@
 					},
 					{
 						"name": "Internet",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_k4d')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "moviesDB - copia.csv",
-						"folderPath": "mi_data"
-					},
-					"columnDelimiter": ",",
-					"rowDelimiter": "\n",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "movie",
-						"type": "String"
-					},
-					{
-						"name": "title",
-						"type": "String"
-					},
-					{
-						"name": "genres",
-						"type": "String"
-					},
-					{
-						"name": "year",
-						"type": "String"
-					},
-					{
-						"name": "Rating",
-						"type": "String"
-					},
-					{
-						"name": "Rotton Tomato",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_l2r')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "moviesDB - copia.csv",
-						"folderPath": "mi_data"
-					},
-					"columnDelimiter": ",",
-					"rowDelimiter": "\n",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "movie",
-						"type": "String"
-					},
-					{
-						"name": "title",
-						"type": "String"
-					},
-					{
-						"name": "genres",
-						"type": "String"
-					},
-					{
-						"name": "year",
-						"type": "String"
-					},
-					{
-						"name": "Rating",
-						"type": "String"
-					},
-					{
-						"name": "Rotton Tomato",
 						"type": "String"
 					}
 				]

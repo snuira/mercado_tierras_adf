@@ -1,0 +1,258 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-upra-monitoreomercado"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_dzt')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					},
+					"encodingName": "UTF-16",
+					"sheetName": "Hoja2"
+				},
+				"schema": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"type": "string"
+						},
+						"Fecha": {
+							"type": "string"
+						},
+						"Nombres": {
+							"type": "string"
+						},
+						"Apellidos": {
+							"type": "string"
+						},
+						"Edad": {
+							"type": "string"
+						},
+						"Genero": {
+							"type": "string"
+						},
+						"Discapacidad": {
+							"type": "string"
+						},
+						"Tipo_discapacidad": {
+							"type": "string"
+						},
+						"Nivel_educacion": {
+							"type": "string"
+						},
+						"Ingles": {
+							"type": "string"
+						},
+						"Cursos": {
+							"type": "string"
+						},
+						"Informatica": {
+							"type": "string"
+						},
+						"Certificacion_competencias": {
+							"type": "string"
+						},
+						"Laborando": {
+							"type": "string"
+						},
+						"Organizacion": {
+							"type": "string"
+						},
+						"Teletrabajado": {
+							"type": "string"
+						},
+						"Internet": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Json2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"type": "string"
+						},
+						"Fecha": {
+							"type": "string"
+						},
+						"Nombres": {
+							"type": "string"
+						},
+						"Apellidos": {
+							"type": "string"
+						},
+						"Edad": {
+							"type": "string"
+						},
+						"Genero": {
+							"type": "string"
+						},
+						"Discapacidad": {
+							"type": "string"
+						},
+						"Tipo_discapacidad": {
+							"type": "string"
+						},
+						"Nivel_educacion": {
+							"type": "string"
+						},
+						"Ingles": {
+							"type": "string"
+						},
+						"Cursos": {
+							"type": "string"
+						},
+						"Informatica": {
+							"type": "string"
+						},
+						"Certificacion_competencias": {
+							"type": "string"
+						},
+						"Laborando": {
+							"type": "string"
+						},
+						"Organizacion": {
+							"type": "string"
+						},
+						"Teletrabajado": {
+							"type": "string"
+						},
+						"Internet": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/data_flow_dnp_nombres')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "data_flow_dnp_nombres",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "conTexto_nombres_mujeres",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "conTexto_nombres_hombres",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						},
+						{
+							"dataset": {
+								"referenceName": "Json2",
+								"type": "DatasetReference"
+							},
+							"name": "source3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dnp_contexto_genero",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "DerivedColumn4"
+						}
+					],
+					"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource(output(\n\t\tID as string,\n\t\tFecha as string,\n\t\tNombres as string,\n\t\tApellidos as string,\n\t\tEdad as string,\n\t\tGenero as string,\n\t\tDiscapacidad as string,\n\t\tTipo_discapacidad as string,\n\t\tNivel_educacion as string,\n\t\tIngles as string,\n\t\tCursos as string,\n\t\tInformatica as string,\n\t\tCertificacion_competencias as string,\n\t\tLaborando as string,\n\t\tOrganizacion as string,\n\t\tTeletrabajado as string,\n\t\tInternet as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: false,\n\tlimit: 100,\n\tdocumentForm: 'documentPerLine') ~> source3\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nDerivedColumn4 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Json2')]"
+			]
+		}
+	]
+}
