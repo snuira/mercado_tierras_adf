@@ -5,6 +5,7 @@
 		"activities": [
 			{
 				"name": "Copy_SNR_Transacciones",
+				"description": "Copiar transacciones SNR",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
