@@ -8,6 +8,7 @@
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
+			"sheetName": "Hoja1",
 			"location": {
 				"type": "AzureBlobFSLocation",
 				"fileName": "BASE_DE_DATOS_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx",
