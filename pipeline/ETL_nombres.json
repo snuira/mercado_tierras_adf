@@ -1,6 +1,7 @@
 {
-	"name": "pipeline1",
+	"name": "ETL_nombres",
 	"properties": {
+		"description": "ETL_nombres",
 		"activities": [
 			{
 				"name": "dataflow1",
