@@ -21,7 +21,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "Json2",
+						"referenceName": "Excel1",
 						"type": "DatasetReference"
 					},
 					"name": "source3"
@@ -50,7 +50,7 @@
 					"name": "DerivedColumn4"
 				}
 			],
-			"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource(output(\n\t\tID as string,\n\t\tFecha as string,\n\t\tNombres as string,\n\t\tApellidos as string,\n\t\tEdad as string,\n\t\tGenero as string,\n\t\tDiscapacidad as string,\n\t\tTipo_discapacidad as string,\n\t\tNivel_educacion as string,\n\t\tIngles as string,\n\t\tCursos as string,\n\t\tInformatica as string,\n\t\tCertificacion_competencias as string,\n\t\tLaborando as string,\n\t\tOrganizacion as string,\n\t\tTeletrabajado as string,\n\t\tInternet as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: false,\n\tlimit: 100,\n\tdocumentForm: 'documentPerLine') ~> source3\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nDerivedColumn4 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource(output(\n\t\tID as string,\n\t\tFecha as string,\n\t\tNombres as string,\n\t\tApellidos as string,\n\t\tEdad as string,\n\t\tGenero as string,\n\t\tDiscapacidad as string,\n\t\tTipo_discapacidad as string,\n\t\tNivel_educacion as string,\n\t\tIngles as string,\n\t\tCursos as string,\n\t\tInformatica as string,\n\t\tCertificacion_competencias as string,\n\t\tLaborando as string,\n\t\tOrganizacion as string,\n\t\tTeletrabajado as string,\n\t\tInternet as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source3\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nDerivedColumn4 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
