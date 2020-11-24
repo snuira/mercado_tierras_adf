@@ -13,6 +13,400 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_q9p')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "RANGOS_VALOR_TRANSACCION.csv",
+						"folderPath": "Entregable/Punto001"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "COD_DPTO",
+						"type": "String"
+					},
+					{
+						"name": "COD_DANE",
+						"type": "String"
+					},
+					{
+						"name": "DEPARTAMENTO",
+						"type": "String"
+					},
+					{
+						"name": "MUNICIPIO",
+						"type": "String"
+					},
+					{
+						"name": "ORIP",
+						"type": "String"
+					},
+					{
+						"name": "VEREDA",
+						"type": "String"
+					},
+					{
+						"name": "MATRICULA",
+						"type": "String"
+					},
+					{
+						"name": "TIPO_PREDIO",
+						"type": "String"
+					},
+					{
+						"name": "NRO_ANOTACION",
+						"type": "String"
+					},
+					{
+						"name": "COD_NATURALEZA",
+						"type": "String"
+					},
+					{
+						"name": "NATURALEZA_JURIDICA",
+						"type": "String"
+					},
+					{
+						"name": "VALOR",
+						"type": "String"
+					},
+					{
+						"name": "DIRECCION",
+						"type": "String"
+					},
+					{
+						"name": "Divipola_Mun_0001",
+						"type": "String"
+					},
+					{
+						"name": "ZRE_NOMBRE",
+						"type": "String"
+					},
+					{
+						"name": "SISTEMA",
+						"type": "String"
+					},
+					{
+						"name": "NRO_PROPIETARIOS",
+						"type": "String"
+					},
+					{
+						"name": "ESTADO_FOLIO",
+						"type": "String"
+					},
+					{
+						"name": "A�O RADICACION",
+						"type": "String"
+					},
+					{
+						"name": "LINDERO",
+						"type": "String"
+					},
+					{
+						"name": "SMMLV",
+						"type": "String"
+					},
+					{
+						"name": "RANGOS_AVALUOS",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_wfc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"folderPath": "Entregable/Punto004"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "CATASTRO",
+						"type": "String"
+					},
+					{
+						"name": "departamentonombre",
+						"type": "String"
+					},
+					{
+						"name": "municipionombre",
+						"type": "String"
+					},
+					{
+						"name": "departamento",
+						"type": "String"
+					},
+					{
+						"name": "municipio",
+						"type": "String"
+					},
+					{
+						"name": "COD_MUN",
+						"type": "String"
+					},
+					{
+						"name": "codigopredial",
+						"type": "String"
+					},
+					{
+						"name": "LARGO",
+						"type": "String"
+					},
+					{
+						"name": "CONDICION",
+						"type": "String"
+					},
+					{
+						"name": "prediosconmejoras",
+						"type": "String"
+					},
+					{
+						"name": "codigopredialcarto",
+						"type": "String"
+					},
+					{
+						"name": "Nro_Predio",
+						"type": "String"
+					},
+					{
+						"name": "CatastroPredio",
+						"type": "String"
+					},
+					{
+						"name": "tipoderegistro",
+						"type": "String"
+					},
+					{
+						"name": "direccion",
+						"type": "String"
+					},
+					{
+						"name": "destinoeconomico",
+						"type": "String"
+					},
+					{
+						"name": "AREATERRENO_m2",
+						"type": "String"
+					},
+					{
+						"name": "AREATERRENO_ha",
+						"type": "String"
+					},
+					{
+						"name": "Area_Cartografica_ha",
+						"type": "String"
+					},
+					{
+						"name": "MinUAF",
+						"type": "String"
+					},
+					{
+						"name": "MaxUAF",
+						"type": "String"
+					},
+					{
+						"name": "clasificacionUAF",
+						"type": "String"
+					},
+					{
+						"name": "tamanopredial5",
+						"type": "String"
+					},
+					{
+						"name": "tamanopredial16",
+						"type": "String"
+					},
+					{
+						"name": "areaconstruida",
+						"type": "String"
+					},
+					{
+						"name": "RANGOS_AVALUO",
+						"type": "String"
+					},
+					{
+						"name": "vigencia",
+						"type": "String"
+					},
+					{
+						"name": "vigencia_actual",
+						"type": "String"
+					},
+					{
+						"name": "matriculainmobiliaria",
+						"type": "String"
+					},
+					{
+						"name": "MATRICULA_DEPURADO",
+						"type": "String"
+					},
+					{
+						"name": "TIPO_MATRICULA",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/data_flow_dnp_nombres')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "data_flow_dnp_nombres",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "conTexto_nombres_mujeres",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "conTexto_nombres_hombres",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dnp_contexto_genero",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "DerivedColumn4"
+						}
+					],
+					"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nDerivedColumn4 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_Catastro_Alfanumerico')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy_Catastro_Alfanumerico",
+				"activities": [
+					{
+						"name": "Copy_wfc",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "Entregable/Punto004/"
+							},
+							{
+								"name": "Destination",
+								"value": "raw/OTROS/CATASTRO/ALFANUMERICO/"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_wfc",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_wfc",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_wfc')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Copy_Catastro_GEO')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -377,7 +771,54 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_q9p')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ETL_nombres')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "ETL_nombres",
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "data_flow_dnp_nombres",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source2": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/data_flow_dnp_nombres')]"
+			]
 		}
 	]
 }

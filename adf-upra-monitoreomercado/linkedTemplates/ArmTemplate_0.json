@@ -290,6 +290,97 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/conTexto_nombres_hombres')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "nombres_hombres.txt",
+						"folderPath": "OTROS/DNP/ConTexto",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/conTexto_nombres_mujeres')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "nombres_mujeres.txt",
+						"folderPath": "OTROS/DNP/ConTexto",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dnp_contexto_genero')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "monitoreo_mercado_tierras/genero/contexto",
+						"fileSystem": "gold"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_b8y')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -518,353 +609,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_q9p')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "RANGOS_VALOR_TRANSACCION.csv",
-						"folderPath": "Entregable/Punto001"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "COD_DPTO",
-						"type": "String"
-					},
-					{
-						"name": "COD_DANE",
-						"type": "String"
-					},
-					{
-						"name": "DEPARTAMENTO",
-						"type": "String"
-					},
-					{
-						"name": "MUNICIPIO",
-						"type": "String"
-					},
-					{
-						"name": "ORIP",
-						"type": "String"
-					},
-					{
-						"name": "VEREDA",
-						"type": "String"
-					},
-					{
-						"name": "MATRICULA",
-						"type": "String"
-					},
-					{
-						"name": "TIPO_PREDIO",
-						"type": "String"
-					},
-					{
-						"name": "NRO_ANOTACION",
-						"type": "String"
-					},
-					{
-						"name": "COD_NATURALEZA",
-						"type": "String"
-					},
-					{
-						"name": "NATURALEZA_JURIDICA",
-						"type": "String"
-					},
-					{
-						"name": "VALOR",
-						"type": "String"
-					},
-					{
-						"name": "DIRECCION",
-						"type": "String"
-					},
-					{
-						"name": "Divipola_Mun_0001",
-						"type": "String"
-					},
-					{
-						"name": "ZRE_NOMBRE",
-						"type": "String"
-					},
-					{
-						"name": "SISTEMA",
-						"type": "String"
-					},
-					{
-						"name": "NRO_PROPIETARIOS",
-						"type": "String"
-					},
-					{
-						"name": "ESTADO_FOLIO",
-						"type": "String"
-					},
-					{
-						"name": "A�O RADICACION",
-						"type": "String"
-					},
-					{
-						"name": "LINDERO",
-						"type": "String"
-					},
-					{
-						"name": "SMMLV",
-						"type": "String"
-					},
-					{
-						"name": "RANGOS_AVALUOS",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_wfc')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"folderPath": "Entregable/Punto004"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "CATASTRO",
-						"type": "String"
-					},
-					{
-						"name": "departamentonombre",
-						"type": "String"
-					},
-					{
-						"name": "municipionombre",
-						"type": "String"
-					},
-					{
-						"name": "departamento",
-						"type": "String"
-					},
-					{
-						"name": "municipio",
-						"type": "String"
-					},
-					{
-						"name": "COD_MUN",
-						"type": "String"
-					},
-					{
-						"name": "codigopredial",
-						"type": "String"
-					},
-					{
-						"name": "LARGO",
-						"type": "String"
-					},
-					{
-						"name": "CONDICION",
-						"type": "String"
-					},
-					{
-						"name": "prediosconmejoras",
-						"type": "String"
-					},
-					{
-						"name": "codigopredialcarto",
-						"type": "String"
-					},
-					{
-						"name": "Nro_Predio",
-						"type": "String"
-					},
-					{
-						"name": "CatastroPredio",
-						"type": "String"
-					},
-					{
-						"name": "tipoderegistro",
-						"type": "String"
-					},
-					{
-						"name": "direccion",
-						"type": "String"
-					},
-					{
-						"name": "destinoeconomico",
-						"type": "String"
-					},
-					{
-						"name": "AREATERRENO_m2",
-						"type": "String"
-					},
-					{
-						"name": "AREATERRENO_ha",
-						"type": "String"
-					},
-					{
-						"name": "Area_Cartografica_ha",
-						"type": "String"
-					},
-					{
-						"name": "MinUAF",
-						"type": "String"
-					},
-					{
-						"name": "MaxUAF",
-						"type": "String"
-					},
-					{
-						"name": "clasificacionUAF",
-						"type": "String"
-					},
-					{
-						"name": "tamanopredial5",
-						"type": "String"
-					},
-					{
-						"name": "tamanopredial16",
-						"type": "String"
-					},
-					{
-						"name": "areaconstruida",
-						"type": "String"
-					},
-					{
-						"name": "RANGOS_AVALUO",
-						"type": "String"
-					},
-					{
-						"name": "vigencia",
-						"type": "String"
-					},
-					{
-						"name": "vigencia_actual",
-						"type": "String"
-					},
-					{
-						"name": "matriculainmobiliaria",
-						"type": "String"
-					},
-					{
-						"name": "MATRICULA_DEPURADO",
-						"type": "String"
-					},
-					{
-						"name": "TIPO_MATRICULA",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_Catastro_Alfanumerico')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Copy_Catastro_Alfanumerico",
-				"activities": [
-					{
-						"name": "Copy_wfc",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Entregable/Punto004/"
-							},
-							{
-								"name": "Destination",
-								"value": "raw/OTROS/CATASTRO/ALFANUMERICO/"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_wfc",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_wfc",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_wfc')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_wfc')]"
 			]
 		}
 	]
