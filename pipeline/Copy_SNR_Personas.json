@@ -4,7 +4,7 @@
 		"description": "Copy_SNR_Personas",
 		"activities": [
 			{
-				"name": "Copy_b8y",
+				"name": "Copy_SNR_Personas",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
