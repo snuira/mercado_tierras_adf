@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx",
+				"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
 				"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
 				"fileSystem": "raw"
 			},
