@@ -1,6 +1,7 @@
 {
-	"name": "dataflow1",
+	"name": "data_flow_dnp_nombres",
 	"properties": {
+		"description": "data_flow_dnp_nombres",
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
