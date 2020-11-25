@@ -25,6 +25,89 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "monitoreo_mercado_tierras/transacciones",
+						"fileSystem": "gold"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/conTexto_nombres_hombres')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "nombres_hombres.txt",
+						"folderPath": "OTROS/DNP/ConTexto",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/conTexto_nombres_mujeres')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "nombres_mujeres.txt",
+						"folderPath": "OTROS/DNP/ConTexto",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dnp_contexto_genero')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -761,7 +844,49 @@
 				}
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/conTexto_nombres_mujeres')]",
+				"[concat(variables('factoryId'), '/datasets/conTexto_nombres_hombres')]",
 				"[concat(variables('factoryId'), '/datasets/dnp_contexto_genero')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_snr_transacciones')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText4",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "Filter1"
+						}
+					],
+					"script": "source(output(\n\t\tCOD_DPTO as string,\n\t\tCOD_DANE as string,\n\t\tDEPARTAMENTO as string,\n\t\tMUNICIPIO as string,\n\t\tORIP as string,\n\t\tVEREDA as string,\n\t\tMATRICULA as string,\n\t\tTIPO_PREDIO as string,\n\t\tNRO_ANOTACION as string,\n\t\tCOD_NATURALEZA as string,\n\t\tNATURALEZA_JURIDICA as string,\n\t\tVALOR as string,\n\t\tDIRECCION as string,\n\t\tDivipola_Mun_0001 as string,\n\t\tZRE_NOMBRE as string,\n\t\tSISTEMA as string,\n\t\tNRO_PROPIETARIOS as string,\n\t\tESTADO_FOLIO as string,\n\t\t{A�O RADICACION} as string,\n\t\tLINDERO as string,\n\t\tSMMLV as string,\n\t\tRANGOS_AVALUOS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 select(mapColumn(\n\t\tCOD_DPTO,\n\t\tCOD_DANE,\n\t\tDEPARTAMENTO,\n\t\tMUNICIPIO,\n\t\tORIP,\n\t\tVEREDA,\n\t\tMATRICULA,\n\t\tTIPO_PREDIO,\n\t\tNRO_ANOTACION,\n\t\tCOD_NATURALEZA,\n\t\tNATURALEZA_JURIDICA,\n\t\tVALOR,\n\t\tDIRECCION,\n\t\tDivipola_Mun_0001,\n\t\tZRE_NOMBRE,\n\t\tSISTEMA,\n\t\tNRO_PROPIETARIOS,\n\t\tESTADO_FOLIO,\n\t\tANIO_RADICACION = {A�O RADICACION},\n\t\tLINDERO,\n\t\tSMMLV,\n\t\tRANGOS_AVALUOS\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 filter(TIPO_PREDIO != 'URBANO') ~> Filter1\nFilter1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
 			]
 		},
 		{
@@ -988,463 +1113,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SourceDataset_na8')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_SNR_GEO')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Copy_SNR_GEO",
-				"activities": [
-					{
-						"name": "Copy_lhk",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Entregable/Punto006/"
-							},
-							{
-								"name": "Destination",
-								"value": "raw/OTROS/SNR/GEOGRAFICO/"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "FileServerReadSettings",
-									"recursive": true,
-									"wildcardFileName": "*"
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false,
-							"enableSkipIncompatibleRow": false,
-							"skipErrorFile": {
-								"fileMissing": true
-							},
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_lhk",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_lhk",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_lhk')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Personas')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Copy_SNR_Personas",
-				"activities": [
-					{
-						"name": "Copy_SNR_Personas",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Entregable/Punto002/RANGOS_CEDULA.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "raw/OTROS/SNR/TRANSACCIONES/personas.csv"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_b8y",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_b8y",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_b8y')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Transacciones')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Transacciones inmobiliarias",
-				"activities": [
-					{
-						"name": "Copy_SNR_Transacciones",
-						"description": "Copiar transacciones SNR",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Entregable/Punto001/RANGOS_VALOR_TRANSACCION.csv"
-							},
-							{
-								"name": "Destination",
-								"value": "raw/OTROS/SNR/TRANSACCIONES/TRANSACCIONES_INMOBILIARIAS.CSV"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "FileServerReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
-								}
-							},
-							"sink": {
-								"type": "DelimitedTextSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_q9p",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_q9p",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_q9p')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Copy_Tunja_Personas')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "Copy_Tunja_Personas",
-				"activities": [
-					{
-						"name": "Copy_dzt",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [
-							{
-								"name": "Source",
-								"value": "Entregable/otros/tunja/BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx"
-							},
-							{
-								"name": "Destination",
-								"value": "raw/OTROS/ALCALDIA_TUNJA/TELETRABAJO/BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx"
-							}
-						],
-						"typeProperties": {
-							"source": {
-								"type": "ExcelSource",
-								"storeSettings": {
-									"type": "FileServerReadSettings",
-									"recursive": false
-								}
-							},
-							"sink": {
-								"type": "JsonSink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "JsonWriteSettings",
-									"filePattern": "arrayOfObjects"
-								}
-							},
-							"enableStaging": false,
-							"validateDataConsistency": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "ID",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['ID']"
-										}
-									},
-									{
-										"source": {
-											"name": "Fecha",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Fecha']"
-										}
-									},
-									{
-										"source": {
-											"name": "Nombres",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Nombres']"
-										}
-									},
-									{
-										"source": {
-											"name": "Apellidos",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Apellidos']"
-										}
-									},
-									{
-										"source": {
-											"name": "Edad",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Edad']"
-										}
-									},
-									{
-										"source": {
-											"name": "Genero",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Genero']"
-										}
-									},
-									{
-										"source": {
-											"name": "Discapacidad",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Discapacidad']"
-										}
-									},
-									{
-										"source": {
-											"name": "Tipo_discapacidad",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Tipo_discapacidad']"
-										}
-									},
-									{
-										"source": {
-											"name": "Nivel_educacion",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Nivel_educacion']"
-										}
-									},
-									{
-										"source": {
-											"name": "Ingles",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Ingles']"
-										}
-									},
-									{
-										"source": {
-											"name": "Cursos",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Cursos']"
-										}
-									},
-									{
-										"source": {
-											"name": "Informatica",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Informatica']"
-										}
-									},
-									{
-										"source": {
-											"name": "Certificacion_competencias",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Certificacion_competencias']"
-										}
-									},
-									{
-										"source": {
-											"name": "Laborando",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Laborando']"
-										}
-									},
-									{
-										"source": {
-											"name": "Organizacion",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Organizacion']"
-										}
-									},
-									{
-										"source": {
-											"name": "Teletrabajado",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Teletrabajado']"
-										}
-									},
-									{
-										"source": {
-											"name": "Internet",
-											"type": "String"
-										},
-										"sink": {
-											"path": "$['Internet']"
-										}
-									}
-								]
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "SourceDataset_dzt",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "DestinationDataset_dzt",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_dzt')]"
 			]
 		}
 	]

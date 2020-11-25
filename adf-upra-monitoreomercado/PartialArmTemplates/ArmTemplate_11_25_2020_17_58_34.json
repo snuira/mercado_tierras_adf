@@ -1,0 +1,255 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adf-upra-monitoreomercado"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/ETL_TRANSACCIONES')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow_snr_transacciones",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow_snr_transacciones')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Avro1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Avro",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "monitoreo_mercado_tierras/transacciones",
+						"fileSystem": "gold"
+					}
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "TRANSACCIONES_INMOBILIARIAS.CSV",
+						"folderPath": "OTROS/SNR/TRANSACCIONES",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "COD_DPTO",
+						"type": "String"
+					},
+					{
+						"name": "COD_DANE",
+						"type": "String"
+					},
+					{
+						"name": "DEPARTAMENTO",
+						"type": "String"
+					},
+					{
+						"name": "MUNICIPIO",
+						"type": "String"
+					},
+					{
+						"name": "ORIP",
+						"type": "String"
+					},
+					{
+						"name": "VEREDA",
+						"type": "String"
+					},
+					{
+						"name": "MATRICULA",
+						"type": "String"
+					},
+					{
+						"name": "TIPO_PREDIO",
+						"type": "String"
+					},
+					{
+						"name": "NRO_ANOTACION",
+						"type": "String"
+					},
+					{
+						"name": "COD_NATURALEZA",
+						"type": "String"
+					},
+					{
+						"name": "NATURALEZA_JURIDICA",
+						"type": "String"
+					},
+					{
+						"name": "VALOR",
+						"type": "String"
+					},
+					{
+						"name": "DIRECCION",
+						"type": "String"
+					},
+					{
+						"name": "Divipola_Mun_0001",
+						"type": "String"
+					},
+					{
+						"name": "ZRE_NOMBRE",
+						"type": "String"
+					},
+					{
+						"name": "SISTEMA",
+						"type": "String"
+					},
+					{
+						"name": "NRO_PROPIETARIOS",
+						"type": "String"
+					},
+					{
+						"name": "ESTADO_FOLIO",
+						"type": "String"
+					},
+					{
+						"name": "A�O RADICACION",
+						"type": "String"
+					},
+					{
+						"name": "LINDERO",
+						"type": "String"
+					},
+					{
+						"name": "SMMLV",
+						"type": "String"
+					},
+					{
+						"name": "RANGOS_AVALUOS",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Parquet1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "monitoreo_mercado_tierras/transacciones",
+						"fileSystem": "gold"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_snr_transacciones')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText4",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "Filter1"
+						}
+					],
+					"script": "source(output(\n\t\tCOD_DPTO as string,\n\t\tCOD_DANE as string,\n\t\tDEPARTAMENTO as string,\n\t\tMUNICIPIO as string,\n\t\tORIP as string,\n\t\tVEREDA as string,\n\t\tMATRICULA as string,\n\t\tTIPO_PREDIO as string,\n\t\tNRO_ANOTACION as string,\n\t\tCOD_NATURALEZA as string,\n\t\tNATURALEZA_JURIDICA as string,\n\t\tVALOR as string,\n\t\tDIRECCION as string,\n\t\tDivipola_Mun_0001 as string,\n\t\tZRE_NOMBRE as string,\n\t\tSISTEMA as string,\n\t\tNRO_PROPIETARIOS as string,\n\t\tESTADO_FOLIO as string,\n\t\t{A�O RADICACION} as string,\n\t\tLINDERO as string,\n\t\tSMMLV as string,\n\t\tRANGOS_AVALUOS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 select(mapColumn(\n\t\tCOD_DPTO,\n\t\tCOD_DANE,\n\t\tDEPARTAMENTO,\n\t\tMUNICIPIO,\n\t\tORIP,\n\t\tVEREDA,\n\t\tMATRICULA,\n\t\tTIPO_PREDIO,\n\t\tNRO_ANOTACION,\n\t\tCOD_NATURALEZA,\n\t\tNATURALEZA_JURIDICA,\n\t\tVALOR,\n\t\tDIRECCION,\n\t\tDivipola_Mun_0001,\n\t\tZRE_NOMBRE,\n\t\tSISTEMA,\n\t\tNRO_PROPIETARIOS,\n\t\tESTADO_FOLIO,\n\t\tANIO_RADICACION = {A�O RADICACION},\n\t\tLINDERO,\n\t\tSMMLV,\n\t\tRANGOS_AVALUOS\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 filter(TIPO_PREDIO != 'URBANO') ~> Filter1\nFilter1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DelimitedText4')]",
+				"[concat(variables('factoryId'), '/datasets/Parquet1')]"
+			]
+		}
+	]
+}
