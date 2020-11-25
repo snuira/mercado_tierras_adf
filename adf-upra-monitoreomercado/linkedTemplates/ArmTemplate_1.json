@@ -110,13 +110,13 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "RANGOS_CEDULA.csv",
+						"fileName": "RANGOS_CEDULA_2.csv",
 						"folderPath": "Entregable/Punto002"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
-					"quoteChar": ""
+					"quoteChar": "\""
 				},
 				"schema": [
 					{
