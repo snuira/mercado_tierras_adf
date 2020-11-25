@@ -436,7 +436,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "RANGOS_VALOR_TRANSACCION.csv",
+						"fileName": "RANGOS_VALOR_TRANSACCION_2.csv",
 						"folderPath": "Entregable/Punto001"
 					},
 					"columnDelimiter": ",",
