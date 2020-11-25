@@ -6,6 +6,18 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "adf-upra-monitoreomercado"
+		},
+		"FileServer1_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'FileServer1'"
+		},
+		"FileServer1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "C:\\SNUIRA\\datos"
+		},
+		"FileServer1_properties_typeProperties_userId": {
+			"type": "string",
+			"defaultValue": "upra\\juan.mendez"
 		}
 	},
 	"variables": {
@@ -13,7 +25,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"name": "[concat(parameters('factoryName'), '/dnp_contexto_genero')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -26,15 +38,11 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.tab",
-						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
-						"fileSystem": "raw"
+						"folderPath": "monitoreo_mercado_tierras/genero/contexto",
+						"fileSystem": "gold"
 					},
-					"columnDelimiter": "\t",
-					"rowDelimiter": "\n",
-					"encodingName": "UTF-16",
+					"columnDelimiter": ",",
 					"escapeChar": "\\",
-					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": []
@@ -42,40 +50,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DelimitedText3')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "BD_PERSONAS_TELETRABAJO.tsv",
-						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": "\t",
-					"encodingName": "UTF-16",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "ID\tFecha\tNombres\tApellidos\tEdad\tGenero\tDiscapacidad\tTipo_discapacidad\tNivel_educacion\tIngles\tCursos\tInformatica\tCertificacion_competencias\tLaborando\tOrganizacion\tTeletrabajado\tInternet",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel1')]",
+			"name": "[concat(parameters('factoryName'), '/teletrabajo_tunja')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -86,85 +61,38 @@
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Hoja2",
+					"sheetName": "Hoja1",
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "BD_PERSONAS_TELETRABAJO.xls",
+						"fileName": "BASE_DE_DATOS_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.xlsx",
 						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
 						"fileSystem": "raw"
 					},
 					"firstRowAsHeader": true
 				},
-				"schema": [
-					{
-						"name": "ID",
-						"type": "String"
-					},
-					{
-						"name": "Fecha",
-						"type": "String"
-					},
-					{
-						"name": "Nombres",
-						"type": "String"
-					},
-					{
-						"name": "Apellidos",
-						"type": "String"
-					},
-					{
-						"name": "Edad",
-						"type": "String"
-					},
-					{
-						"name": "Genero",
-						"type": "String"
-					},
-					{
-						"name": "Discapacidad",
-						"type": "String"
-					},
-					{
-						"name": "Tipo_discapacidad",
-						"type": "String"
-					},
-					{
-						"name": "Nivel_educacion",
-						"type": "String"
-					},
-					{
-						"name": "Ingles",
-						"type": "String"
-					},
-					{
-						"name": "Cursos",
-						"type": "String"
-					},
-					{
-						"name": "Informatica",
-						"type": "String"
-					},
-					{
-						"name": "Certificacion_competencias",
-						"type": "String"
-					},
-					{
-						"name": "Laborando",
-						"type": "String"
-					},
-					{
-						"name": "Organizacion",
-						"type": "String"
-					},
-					{
-						"name": "Teletrabajado",
-						"type": "String"
-					},
-					{
-						"name": "Internet",
-						"type": "String"
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FileServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "FileServer",
+				"typeProperties": {
+					"host": "[parameters('FileServer1_properties_typeProperties_host')]",
+					"userId": "[parameters('FileServer1_properties_typeProperties_userId')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('FileServer1_password')]"
 					}
-				]
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntimeSnuira",
+					"type": "IntegrationRuntimeReference"
+				}
 			},
 			"dependsOn": []
 		},
@@ -188,7 +116,7 @@
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
-					"quoteChar": "\""
+					"quoteChar": ""
 				},
 				"schema": [
 					{
@@ -221,7 +149,9 @@
 					}
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_dzt')]",
@@ -314,7 +244,9 @@
 					}
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_k4d')]",
@@ -366,7 +298,9 @@
 					}
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_l2r')]",
@@ -418,7 +352,9 @@
 					}
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_lhk')]",
@@ -438,7 +374,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_na8')]",
@@ -458,7 +396,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_ot1')]",
@@ -478,7 +418,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_q9p')]",
@@ -593,7 +535,9 @@
 					}
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_wfc')]",
@@ -743,7 +687,9 @@
 					}
 				]
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/data_flow_dnp_nombres')]",
@@ -815,7 +761,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Excel1')]"
+				"[concat(variables('factoryId'), '/datasets/dnp_contexto_genero')]"
 			]
 		},
 		{
