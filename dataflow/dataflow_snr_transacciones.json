@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "dataflow_snr_transacciones",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

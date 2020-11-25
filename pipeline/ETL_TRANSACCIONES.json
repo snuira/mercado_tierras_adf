@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "dataflow_snr_transacciones",
 						"type": "DataFlowReference"
 					},
 					"compute": {
