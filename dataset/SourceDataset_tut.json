@@ -1,0 +1,17 @@
+{
+	"name": "SourceDataset_tut",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "FileServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "FileServerLocation",
+				"folderPath": "Entregable/ARCHIVOS_JSON"
+			}
+		}
+	}
+}
