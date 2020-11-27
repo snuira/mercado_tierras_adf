@@ -1,6 +1,7 @@
 {
-	"name": "pipeline1",
+	"name": "ETL_SNR_PERSONAS",
 	"properties": {
+		"description": "ETL_SNR_PERSONAS",
 		"activities": [
 			{
 				"name": "dataflow1",
