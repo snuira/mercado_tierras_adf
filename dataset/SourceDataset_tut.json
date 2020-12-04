@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
+				"fileName": "*_V2.json",
 				"folderPath": "Entregable/ARCHIVOS_JSON"
 			}
 		}
