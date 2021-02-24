@@ -414,14 +414,14 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Personas')]",
+			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Intervinientes')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Copy_SNR_Personas",
+				"description": "Copy_SNR_Intervinientes",
 				"activities": [
 					{
-						"name": "Copy_SNR_Personas",
+						"name": "Copy_0md",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -434,34 +434,28 @@
 						"userProperties": [
 							{
 								"name": "Source",
-								"value": "Entregable/Punto002/RANGOS_CEDULA.csv"
+								"value": "Entregable/9024_LaboratorioSNUIRA/TRANSACCIONES_INTERVINIENTES.json"
 							},
 							{
 								"name": "Destination",
-								"value": "raw/OTROS/SNR/TRANSACCIONES/personas.csv"
+								"value": "raw/OTROS/SNR/JSON/TRANSACCIONES_INTERVINIENTES.json"
 							}
 						],
 						"typeProperties": {
 							"source": {
-								"type": "DelimitedTextSource",
+								"type": "BinarySource",
 								"storeSettings": {
 									"type": "FileServerReadSettings",
 									"recursive": true
 								},
 								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
+									"type": "BinaryReadSettings"
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "BinarySink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -469,14 +463,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SourceDataset_b8y",
+								"referenceName": "SourceDataset_0md",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_b8y",
+								"referenceName": "DestinationDataset_0md",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -486,8 +480,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SourceDataset_b8y')]",
-				"[concat(variables('factoryId'), '/datasets/DestinationDataset_b8y')]"
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_0md')]",
+				"[concat(variables('factoryId'), '/datasets/DestinationDataset_0md')]"
 			]
 		},
 		{
@@ -1131,6 +1125,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DestinationDataset_0md')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "TRANSACCIONES_INTERVINIENTES.json",
+						"folderPath": "OTROS/SNR/JSON",
+						"fileSystem": "raw"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DestinationDataset_b8y')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1749,6 +1767,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_0md')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "TRANSACCIONES_INTERVINIENTES.json",
+						"folderPath": "Entregable/9024_LaboratorioSNUIRA"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_b8y')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2205,6 +2246,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
+						"fileName": "*_V2.json",
 						"folderPath": "Entregable/ARCHIVOS_JSON"
 					}
 				}

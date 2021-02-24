@@ -13,6 +13,119 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow_snr_transacciones')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText4",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Parquet1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "Filter1"
+						}
+					],
+					"script": "source(output(\n\t\tCOD_DPTO as string,\n\t\tCOD_DANE as string,\n\t\tDEPARTAMENTO as string,\n\t\tMUNICIPIO as string,\n\t\tORIP as string,\n\t\tVEREDA as string,\n\t\tMATRICULA as string,\n\t\tTIPO_PREDIO as string,\n\t\tNRO_ANOTACION as string,\n\t\tCOD_NATURALEZA as string,\n\t\tNATURALEZA_JURIDICA as string,\n\t\tVALOR as string,\n\t\tDIRECCION as string,\n\t\tDivipola_Mun_0001 as string,\n\t\tZRE_NOMBRE as string,\n\t\tSISTEMA as string,\n\t\tNRO_PROPIETARIOS as string,\n\t\tESTADO_FOLIO as string,\n\t\t{A�O RADICACION} as string,\n\t\tLINDERO as string,\n\t\tSMMLV as string,\n\t\tRANGOS_AVALUOS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 select(mapColumn(\n\t\tCOD_DPTO,\n\t\tCOD_DANE,\n\t\tDEPARTAMENTO,\n\t\tMUNICIPIO,\n\t\tORIP,\n\t\tVEREDA,\n\t\tMATRICULA,\n\t\tTIPO_PREDIO,\n\t\tNRO_ANOTACION,\n\t\tCOD_NATURALEZA,\n\t\tNATURALEZA_JURIDICA,\n\t\tVALOR,\n\t\tDIRECCION,\n\t\tDivipola_Mun_0001,\n\t\tZRE_NOMBRE,\n\t\tSISTEMA,\n\t\tNRO_PROPIETARIOS,\n\t\tESTADO_FOLIO,\n\t\tANIO_RADICACION = {A�O RADICACION},\n\t\tLINDERO,\n\t\tSMMLV,\n\t\tRANGOS_AVALUOS\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 filter(TIPO_PREDIO != 'URBANO') ~> Filter1\nFilter1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_Catastro_Alfanumerico')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy_Catastro_Alfanumerico",
+				"activities": [
+					{
+						"name": "Copy_wfc",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "Entregable/Punto004/"
+							},
+							{
+								"name": "Destination",
+								"value": "raw/OTROS/CATASTRO/ALFANUMERICO/"
+							}
+						],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings",
+									"skipLineCount": 0
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"validateDataConsistency": false
+						},
+						"inputs": [
+							{
+								"referenceName": "SourceDataset_wfc",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DestinationDataset_wfc",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Copy_Catastro_GEO')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -304,14 +417,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Personas')]",
+			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Intervinientes')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"description": "Copy_SNR_Personas",
+				"description": "Copy_SNR_Intervinientes",
 				"activities": [
 					{
-						"name": "Copy_SNR_Personas",
+						"name": "Copy_0md",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -324,34 +437,28 @@
 						"userProperties": [
 							{
 								"name": "Source",
-								"value": "Entregable/Punto002/RANGOS_CEDULA.csv"
+								"value": "Entregable/9024_LaboratorioSNUIRA/TRANSACCIONES_INTERVINIENTES.json"
 							},
 							{
 								"name": "Destination",
-								"value": "raw/OTROS/SNR/TRANSACCIONES/personas.csv"
+								"value": "raw/OTROS/SNR/JSON/TRANSACCIONES_INTERVINIENTES.json"
 							}
 						],
 						"typeProperties": {
 							"source": {
-								"type": "DelimitedTextSource",
+								"type": "BinarySource",
 								"storeSettings": {
 									"type": "FileServerReadSettings",
 									"recursive": true
 								},
 								"formatSettings": {
-									"type": "DelimitedTextReadSettings",
-									"skipLineCount": 0
+									"type": "BinaryReadSettings"
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "BinarySink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
-								},
-								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
 								}
 							},
 							"enableStaging": false,
@@ -359,14 +466,14 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "SourceDataset_b8y",
+								"referenceName": "SourceDataset_0md",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DestinationDataset_b8y",
+								"referenceName": "DestinationDataset_0md",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -718,7 +825,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow_snr_transacciones')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ETL_nombres')]",
