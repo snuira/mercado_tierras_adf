@@ -7,7 +7,7 @@
 		"typeProperties": {
 			"host": "C:\\SNUIRA\\datos",
 			"userId": "upra\\juan.mendez",
-			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJlYTk0ZjJhOS03OTI4LTQxOWMtYTM4Ni00YWJlMGRiOTI0OTEiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIwOTQ2OTU0Yy04N2QzLTQ2YWQtOTg1Zi0xODhlMGNjMmE4ODkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
 		},
 		"connectVia": {
 			"referenceName": "integrationRuntimeSnuira",
