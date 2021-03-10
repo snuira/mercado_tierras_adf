@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "OTROS/SNR/JSON",
+				"folderPath": "OTROS/SNR/json_deptos",
 				"fileSystem": "raw"
 			}
 		}
