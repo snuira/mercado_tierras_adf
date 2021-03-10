@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
+				"fileName": "*",
 				"folderPath": "Entregable/SNR/transacciones_deptos"
 			}
 		}
