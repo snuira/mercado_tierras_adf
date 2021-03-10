@@ -25,6 +25,84 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Json1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Json",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_INSCRITAS_AL_PROGRAMA_TUNJA_TELETRABAJO.json",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					}
+				},
+				"schema": {
+					"type": "object",
+					"properties": {
+						"ID": {
+							"type": "string"
+						},
+						"Fecha": {
+							"type": "string"
+						},
+						"Nombres": {
+							"type": "string"
+						},
+						"Apellidos": {
+							"type": "string"
+						},
+						"Edad": {
+							"type": "string"
+						},
+						"Genero": {
+							"type": "string"
+						},
+						"Discapacidad": {
+							"type": "string"
+						},
+						"Tipo_discapacidad": {
+							"type": "string"
+						},
+						"Nivel_educacion": {
+							"type": "string"
+						},
+						"Ingles": {
+							"type": "string"
+						},
+						"Cursos": {
+							"type": "string"
+						},
+						"Informatica": {
+							"type": "string"
+						},
+						"Certificacion_competencias": {
+							"type": "string"
+						},
+						"Laborando": {
+							"type": "string"
+						},
+						"Organizacion": {
+							"type": "string"
+						},
+						"Teletrabajado": {
+							"type": "string"
+						},
+						"Internet": {
+							"type": "string"
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Json2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -331,6 +409,27 @@
 				"connectVia": {
 					"referenceName": "integrationRuntimeSnuira",
 					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "OTROS/SNR/json_deptos",
+						"fileSystem": "raw"
+					}
 				}
 			},
 			"dependsOn": []
@@ -802,7 +901,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_tut')]",
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_qir')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -815,240 +914,13 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"fileName": "*_V2.json",
-						"folderPath": "Entregable/ARCHIVOS_JSON"
+						"fileName": "*",
+						"folderPath": "Entregable/SNR/transacciones_deptos"
 					}
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_wfc')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"folderPath": "Entregable/Punto004"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "CATASTRO",
-						"type": "String"
-					},
-					{
-						"name": "departamentonombre",
-						"type": "String"
-					},
-					{
-						"name": "municipionombre",
-						"type": "String"
-					},
-					{
-						"name": "departamento",
-						"type": "String"
-					},
-					{
-						"name": "municipio",
-						"type": "String"
-					},
-					{
-						"name": "COD_MUN",
-						"type": "String"
-					},
-					{
-						"name": "codigopredial",
-						"type": "String"
-					},
-					{
-						"name": "LARGO",
-						"type": "String"
-					},
-					{
-						"name": "CONDICION",
-						"type": "String"
-					},
-					{
-						"name": "prediosconmejoras",
-						"type": "String"
-					},
-					{
-						"name": "codigopredialcarto",
-						"type": "String"
-					},
-					{
-						"name": "Nro_Predio",
-						"type": "String"
-					},
-					{
-						"name": "CatastroPredio",
-						"type": "String"
-					},
-					{
-						"name": "tipoderegistro",
-						"type": "String"
-					},
-					{
-						"name": "direccion",
-						"type": "String"
-					},
-					{
-						"name": "destinoeconomico",
-						"type": "String"
-					},
-					{
-						"name": "AREATERRENO_m2",
-						"type": "String"
-					},
-					{
-						"name": "AREATERRENO_ha",
-						"type": "String"
-					},
-					{
-						"name": "Area_Cartografica_ha",
-						"type": "String"
-					},
-					{
-						"name": "MinUAF",
-						"type": "String"
-					},
-					{
-						"name": "MaxUAF",
-						"type": "String"
-					},
-					{
-						"name": "clasificacionUAF",
-						"type": "String"
-					},
-					{
-						"name": "tamanopredial5",
-						"type": "String"
-					},
-					{
-						"name": "tamanopredial16",
-						"type": "String"
-					},
-					{
-						"name": "areaconstruida",
-						"type": "String"
-					},
-					{
-						"name": "RANGOS_AVALUO",
-						"type": "String"
-					},
-					{
-						"name": "vigencia",
-						"type": "String"
-					},
-					{
-						"name": "vigencia_actual",
-						"type": "String"
-					},
-					{
-						"name": "matriculainmobiliaria",
-						"type": "String"
-					},
-					{
-						"name": "MATRICULA_DEPURADO",
-						"type": "String"
-					},
-					{
-						"name": "TIPO_MATRICULA",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/data_flow_dnp_nombres')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"description": "data_flow_dnp_nombres",
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "conTexto_nombres_mujeres",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						},
-						{
-							"dataset": {
-								"referenceName": "conTexto_nombres_hombres",
-								"type": "DatasetReference"
-							},
-							"name": "source2"
-						},
-						{
-							"dataset": {
-								"referenceName": "Excel1",
-								"type": "DatasetReference"
-							},
-							"name": "source3"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "dnp_contexto_genero",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "DerivedColumn2"
-						},
-						{
-							"name": "DerivedColumn3"
-						},
-						{
-							"name": "Union1"
-						},
-						{
-							"name": "DerivedColumn4"
-						},
-						{
-							"name": "DerivedColumn5"
-						},
-						{
-							"name": "Select1"
-						},
-						{
-							"name": "Union2"
-						},
-						{
-							"name": "DerivedColumn6"
-						}
-					],
-					"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource(output(\n\t\tID as string,\n\t\tFecha as string,\n\t\tNombres as string,\n\t\tApellidos as string,\n\t\tEdad as string,\n\t\tGenero as string,\n\t\tDiscapacidad as string,\n\t\tTipo_discapacidad as string,\n\t\tNivel_educacion as string,\n\t\tIngles as string,\n\t\tCursos as string,\n\t\tInformatica as string,\n\t\tCertificacion_competencias as string,\n\t\tLaborando as string,\n\t\tOrganizacion as string,\n\t\tTeletrabajado as string,\n\t\tInternet as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source3\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nsource3 derive(FUENTE = \"TUNJA\") ~> DerivedColumn5\nDerivedColumn5 select(mapColumn(\n\t\tNOMBRE = Nombres,\n\t\tGENERO = Genero,\n\t\tFUENTE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nDerivedColumn4, Select1 union(byName: true)~> Union2\nUnion2 derive(NOMBRE = trim(upper(NOMBRE)),\n\t\tGENERO = trim(upper(GENERO)),\n\t\tULTIMA_LETRA = upper(substring( reverse(trim(NOMBRE)) , 1, 1)  )) ~> DerivedColumn6\nDerivedColumn6 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['nombres_unificados.csv'],\n\ttruncate: true,\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/conTexto_nombres_mujeres')]",
-				"[concat(variables('factoryId'), '/datasets/conTexto_nombres_hombres')]",
-				"[concat(variables('factoryId'), '/datasets/dnp_contexto_genero')]"
 			]
 		}
 	]

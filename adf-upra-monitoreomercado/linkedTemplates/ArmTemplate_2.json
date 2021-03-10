@@ -13,6 +13,248 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_tut')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "*_V2.json",
+						"folderPath": "Entregable/ARCHIVOS_JSON"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SourceDataset_wfc')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"folderPath": "Entregable/Punto004"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "CATASTRO",
+						"type": "String"
+					},
+					{
+						"name": "departamentonombre",
+						"type": "String"
+					},
+					{
+						"name": "municipionombre",
+						"type": "String"
+					},
+					{
+						"name": "departamento",
+						"type": "String"
+					},
+					{
+						"name": "municipio",
+						"type": "String"
+					},
+					{
+						"name": "COD_MUN",
+						"type": "String"
+					},
+					{
+						"name": "codigopredial",
+						"type": "String"
+					},
+					{
+						"name": "LARGO",
+						"type": "String"
+					},
+					{
+						"name": "CONDICION",
+						"type": "String"
+					},
+					{
+						"name": "prediosconmejoras",
+						"type": "String"
+					},
+					{
+						"name": "codigopredialcarto",
+						"type": "String"
+					},
+					{
+						"name": "Nro_Predio",
+						"type": "String"
+					},
+					{
+						"name": "CatastroPredio",
+						"type": "String"
+					},
+					{
+						"name": "tipoderegistro",
+						"type": "String"
+					},
+					{
+						"name": "direccion",
+						"type": "String"
+					},
+					{
+						"name": "destinoeconomico",
+						"type": "String"
+					},
+					{
+						"name": "AREATERRENO_m2",
+						"type": "String"
+					},
+					{
+						"name": "AREATERRENO_ha",
+						"type": "String"
+					},
+					{
+						"name": "Area_Cartografica_ha",
+						"type": "String"
+					},
+					{
+						"name": "MinUAF",
+						"type": "String"
+					},
+					{
+						"name": "MaxUAF",
+						"type": "String"
+					},
+					{
+						"name": "clasificacionUAF",
+						"type": "String"
+					},
+					{
+						"name": "tamanopredial5",
+						"type": "String"
+					},
+					{
+						"name": "tamanopredial16",
+						"type": "String"
+					},
+					{
+						"name": "areaconstruida",
+						"type": "String"
+					},
+					{
+						"name": "RANGOS_AVALUO",
+						"type": "String"
+					},
+					{
+						"name": "vigencia",
+						"type": "String"
+					},
+					{
+						"name": "vigencia_actual",
+						"type": "String"
+					},
+					{
+						"name": "matriculainmobiliaria",
+						"type": "String"
+					},
+					{
+						"name": "MATRICULA_DEPURADO",
+						"type": "String"
+					},
+					{
+						"name": "TIPO_MATRICULA",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/data_flow_dnp_nombres')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "data_flow_dnp_nombres",
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "conTexto_nombres_mujeres",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "conTexto_nombres_hombres",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						},
+						{
+							"dataset": {
+								"referenceName": "Excel1",
+								"type": "DatasetReference"
+							},
+							"name": "source3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "dnp_contexto_genero",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "DerivedColumn2"
+						},
+						{
+							"name": "DerivedColumn3"
+						},
+						{
+							"name": "Union1"
+						},
+						{
+							"name": "DerivedColumn4"
+						},
+						{
+							"name": "DerivedColumn5"
+						},
+						{
+							"name": "Select1"
+						},
+						{
+							"name": "Union2"
+						},
+						{
+							"name": "DerivedColumn6"
+						}
+					],
+					"script": "source(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource(output(\n\t\tNOMBRE as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nsource(output(\n\t\tID as string,\n\t\tFecha as string,\n\t\tNombres as string,\n\t\tApellidos as string,\n\t\tEdad as string,\n\t\tGenero as string,\n\t\tDiscapacidad as string,\n\t\tTipo_discapacidad as string,\n\t\tNivel_educacion as string,\n\t\tIngles as string,\n\t\tCursos as string,\n\t\tInformatica as string,\n\t\tCertificacion_competencias as string,\n\t\tLaborando as string,\n\t\tOrganizacion as string,\n\t\tTeletrabajado as string,\n\t\tInternet as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source3\nsource1 derive(GENERO = \"FEMENINO\") ~> DerivedColumn2\nsource2 derive(GENERO = \"MASCULINO\") ~> DerivedColumn3\nDerivedColumn2, DerivedColumn3 union(byName: true)~> Union1\nUnion1 derive(FUENTE = \"DNP CONTEXTO\") ~> DerivedColumn4\nsource3 derive(FUENTE = \"TUNJA\") ~> DerivedColumn5\nDerivedColumn5 select(mapColumn(\n\t\tNOMBRE = Nombres,\n\t\tGENERO = Genero,\n\t\tFUENTE\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nDerivedColumn4, Select1 union(byName: true)~> Union2\nUnion2 derive(NOMBRE = trim(upper(NOMBRE)),\n\t\tGENERO = trim(upper(GENERO)),\n\t\tULTIMA_LETRA = upper(substring( reverse(trim(NOMBRE)) , 1, 1)  )) ~> DerivedColumn6\nDerivedColumn6 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['nombres_unificados.csv'],\n\ttruncate: true,\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow_snr_transacciones')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -46,6 +288,27 @@
 						}
 					],
 					"script": "source(output(\n\t\tCOD_DPTO as string,\n\t\tCOD_DANE as string,\n\t\tDEPARTAMENTO as string,\n\t\tMUNICIPIO as string,\n\t\tORIP as string,\n\t\tVEREDA as string,\n\t\tMATRICULA as string,\n\t\tTIPO_PREDIO as string,\n\t\tNRO_ANOTACION as string,\n\t\tCOD_NATURALEZA as string,\n\t\tNATURALEZA_JURIDICA as string,\n\t\tVALOR as string,\n\t\tDIRECCION as string,\n\t\tDivipola_Mun_0001 as string,\n\t\tZRE_NOMBRE as string,\n\t\tSISTEMA as string,\n\t\tNRO_PROPIETARIOS as string,\n\t\tESTADO_FOLIO as string,\n\t\t{A�O RADICACION} as string,\n\t\tLINDERO as string,\n\t\tSMMLV as string,\n\t\tRANGOS_AVALUOS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source1\nsource1 select(mapColumn(\n\t\tCOD_DPTO,\n\t\tCOD_DANE,\n\t\tDEPARTAMENTO,\n\t\tMUNICIPIO,\n\t\tORIP,\n\t\tVEREDA,\n\t\tMATRICULA,\n\t\tTIPO_PREDIO,\n\t\tNRO_ANOTACION,\n\t\tCOD_NATURALEZA,\n\t\tNATURALEZA_JURIDICA,\n\t\tVALOR,\n\t\tDIRECCION,\n\t\tDivipola_Mun_0001,\n\t\tZRE_NOMBRE,\n\t\tSISTEMA,\n\t\tNRO_PROPIETARIOS,\n\t\tESTADO_FOLIO,\n\t\tANIO_RADICACION = {A�O RADICACION},\n\t\tLINDERO,\n\t\tSMMLV,\n\t\tRANGOS_AVALUOS\n\t),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Select1\nSelect1 filter(TIPO_PREDIO != 'URBANO') ~> Filter1\nFilter1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"fileName": "*",
+						"folderPath": "Entregable/SNR/transacciones_deptos"
+					}
 				}
 			},
 			"dependsOn": []
@@ -123,7 +386,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_wfc')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Copy_Catastro_GEO')]",
@@ -341,7 +606,9 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SourceDataset_tut')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Copy_SNR_GEO')]",
@@ -872,7 +1139,69 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/data_flow_dnp_nombres')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Copy_SNR_Deptos')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"description": "Copy_SNR_Deptos",
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "BinarySource",
+								"storeSettings": {
+									"type": "FileServerReadSettings",
+									"recursive": true
+								},
+								"formatSettings": {
+									"type": "BinaryReadSettings"
+								}
+							},
+							"sink": {
+								"type": "BinarySink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								}
+							},
+							"enableStaging": false
+						},
+						"inputs": [
+							{
+								"referenceName": "Binary1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Binary2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Binary1')]"
+			]
 		}
 	]
 }
