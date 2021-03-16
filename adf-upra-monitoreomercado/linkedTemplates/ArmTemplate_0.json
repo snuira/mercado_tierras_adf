@@ -73,6 +73,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Binary2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "OTROS/SNR/json_deptos",
+						"fileSystem": "raw"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -589,102 +612,6 @@
 					"quoteChar": "\""
 				},
 				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorage1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Hoja2",
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "BD_PERSONAS_TELETRABAJO.xls",
-						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
-						"fileSystem": "raw"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "ID",
-						"type": "String"
-					},
-					{
-						"name": "Fecha",
-						"type": "String"
-					},
-					{
-						"name": "Nombres",
-						"type": "String"
-					},
-					{
-						"name": "Apellidos",
-						"type": "String"
-					},
-					{
-						"name": "Edad",
-						"type": "String"
-					},
-					{
-						"name": "Genero",
-						"type": "String"
-					},
-					{
-						"name": "Discapacidad",
-						"type": "String"
-					},
-					{
-						"name": "Tipo_discapacidad",
-						"type": "String"
-					},
-					{
-						"name": "Nivel_educacion",
-						"type": "String"
-					},
-					{
-						"name": "Ingles",
-						"type": "String"
-					},
-					{
-						"name": "Cursos",
-						"type": "String"
-					},
-					{
-						"name": "Informatica",
-						"type": "String"
-					},
-					{
-						"name": "Certificacion_competencias",
-						"type": "String"
-					},
-					{
-						"name": "Laborando",
-						"type": "String"
-					},
-					{
-						"name": "Organizacion",
-						"type": "String"
-					},
-					{
-						"name": "Teletrabajado",
-						"type": "String"
-					},
-					{
-						"name": "Internet",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"

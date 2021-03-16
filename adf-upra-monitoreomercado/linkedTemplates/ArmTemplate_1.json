@@ -25,6 +25,100 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Hoja2",
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "BD_PERSONAS_TELETRABAJO.xls",
+						"folderPath": "OTROS/ALCALDIA_TUNJA/TELETRABAJO",
+						"fileSystem": "raw"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "ID",
+						"type": "String"
+					},
+					{
+						"name": "Fecha",
+						"type": "String"
+					},
+					{
+						"name": "Nombres",
+						"type": "String"
+					},
+					{
+						"name": "Apellidos",
+						"type": "String"
+					},
+					{
+						"name": "Edad",
+						"type": "String"
+					},
+					{
+						"name": "Genero",
+						"type": "String"
+					},
+					{
+						"name": "Discapacidad",
+						"type": "String"
+					},
+					{
+						"name": "Tipo_discapacidad",
+						"type": "String"
+					},
+					{
+						"name": "Nivel_educacion",
+						"type": "String"
+					},
+					{
+						"name": "Ingles",
+						"type": "String"
+					},
+					{
+						"name": "Cursos",
+						"type": "String"
+					},
+					{
+						"name": "Informatica",
+						"type": "String"
+					},
+					{
+						"name": "Certificacion_competencias",
+						"type": "String"
+					},
+					{
+						"name": "Laborando",
+						"type": "String"
+					},
+					{
+						"name": "Organizacion",
+						"type": "String"
+					},
+					{
+						"name": "Teletrabajado",
+						"type": "String"
+					},
+					{
+						"name": "Internet",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Json1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -414,7 +508,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Binary2')]",
+			"name": "[concat(parameters('factoryName'), '/Binary4')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -427,12 +521,34 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "OTROS/SNR/json_deptos",
+						"folderPath": "OTROS/CATASTRO/GEOGRAFICO",
 						"fileSystem": "raw"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "FileServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "FileServerLocation",
+						"folderPath": "Entregable/SNR/transacciones_deptos"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/SourceDataset_0md')]",
@@ -776,146 +892,6 @@
 					"location": {
 						"type": "FileServerLocation",
 						"folderPath": "Entregable/Punto005/GEOJSON"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_q9p')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "RANGOS_VALOR_TRANSACCION_2.csv",
-						"folderPath": "Entregable/Punto001"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "COD_DPTO",
-						"type": "String"
-					},
-					{
-						"name": "COD_DANE",
-						"type": "String"
-					},
-					{
-						"name": "DEPARTAMENTO",
-						"type": "String"
-					},
-					{
-						"name": "MUNICIPIO",
-						"type": "String"
-					},
-					{
-						"name": "ORIP",
-						"type": "String"
-					},
-					{
-						"name": "VEREDA",
-						"type": "String"
-					},
-					{
-						"name": "MATRICULA",
-						"type": "String"
-					},
-					{
-						"name": "TIPO_PREDIO",
-						"type": "String"
-					},
-					{
-						"name": "NRO_ANOTACION",
-						"type": "String"
-					},
-					{
-						"name": "COD_NATURALEZA",
-						"type": "String"
-					},
-					{
-						"name": "NATURALEZA_JURIDICA",
-						"type": "String"
-					},
-					{
-						"name": "VALOR",
-						"type": "String"
-					},
-					{
-						"name": "DIRECCION",
-						"type": "String"
-					},
-					{
-						"name": "Divipola_Mun_0001",
-						"type": "String"
-					},
-					{
-						"name": "ZRE_NOMBRE",
-						"type": "String"
-					},
-					{
-						"name": "SISTEMA",
-						"type": "String"
-					},
-					{
-						"name": "NRO_PROPIETARIOS",
-						"type": "String"
-					},
-					{
-						"name": "ESTADO_FOLIO",
-						"type": "String"
-					},
-					{
-						"name": "A�O RADICACION",
-						"type": "String"
-					},
-					{
-						"name": "LINDERO",
-						"type": "String"
-					},
-					{
-						"name": "SMMLV",
-						"type": "String"
-					},
-					{
-						"name": "RANGOS_AVALUOS",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/FileServer1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SourceDataset_qir')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "FileServer1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Binary",
-				"typeProperties": {
-					"location": {
-						"type": "FileServerLocation",
-						"fileName": "*",
-						"folderPath": "Entregable/SNR/transacciones_deptos"
 					}
 				}
 			},
