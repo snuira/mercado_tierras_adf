@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
+				"fileName": "*rg*",
 				"folderPath": "Entregable/fgdb/WKT"
 			}
 		}
