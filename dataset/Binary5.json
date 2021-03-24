@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"folderPath": "Entregable/fgdb/comprimido"
+				"folderPath": "Entregable/fgdb/WKT_entidades_geograficas_nacional"
 			}
 		}
 	}
