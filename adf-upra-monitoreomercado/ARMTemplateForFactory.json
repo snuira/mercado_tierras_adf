@@ -1198,7 +1198,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "FileServerLocation",
-						"folderPath": "Entregable/fgdb/comprimido"
+						"folderPath": "Entregable/fgdb/WKT_entidades_geograficas_nacional"
 					}
 				}
 			},
@@ -1220,7 +1220,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"folderPath": "OTROS/CATASTRO/comprimido",
+						"folderPath": "OTROS/DANE/DIVIPOLA_WKT",
 						"fileSystem": "raw"
 					}
 				}
