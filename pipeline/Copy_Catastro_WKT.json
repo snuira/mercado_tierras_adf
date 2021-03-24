@@ -1,6 +1,7 @@
 {
-	"name": "pipeline2",
+	"name": "Copy_Catastro_WKT",
 	"properties": {
+		"description": "Copy_Catastro_WKT",
 		"activities": [
 			{
 				"name": "Copy_Catastro_WKT",
