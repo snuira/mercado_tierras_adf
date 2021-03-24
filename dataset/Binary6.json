@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "OTROS/CATASTRO/WKT",
+				"folderPath": "OTROS/CATASTRO/comprimido",
 				"fileSystem": "raw"
 			}
 		}
