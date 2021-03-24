@@ -10,7 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "FileServerLocation",
-				"folderPath": "Entregable/fgdb/WKT_2"
+				"folderPath": "Entregable/fgdb/comprimido"
 			}
 		}
 	}
