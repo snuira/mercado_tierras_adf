@@ -1,0 +1,12 @@
+{
+	"name": "AzureTable2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureTableStorage2",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureTable",
+		"schema": []
+	}
+}

@@ -17,14 +17,8 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "BinarySource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true
-						},
-						"formatSettings": {
-							"type": "BinaryReadSettings"
-						}
+						"type": "AzureTableSource",
+						"azureTableSourceIgnoreTableNotFound": false
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -37,11 +31,19 @@
 							"fileExtension": ".txt"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "Binary7",
+						"referenceName": "AzureTable2",
 						"type": "DatasetReference"
 					}
 				],
