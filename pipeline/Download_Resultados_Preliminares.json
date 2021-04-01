@@ -1,0 +1,7 @@
+{
+	"name": "Download_Resultados_Preliminares",
+	"properties": {
+		"description": "Descargar los resultados preliminares en formato csv",
+		"annotations": []
+	}
+}
