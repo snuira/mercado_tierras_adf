@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "transacciones_rurales_r1r2_data_v1.csv",
-				"folderPath": "UPRA/MERCADO_TIERRAS",
+				"fileName": "part-00000-tid-8940089158764725175-be551500-8057-4128-9912-30e252186aa8-1314-1-c000.csv",
+				"folderPath": "UPRA/MERCADO_TIERRAS/transacciones_rurales_r1r2_data_v1.csv",
 				"fileSystem": "gold"
 			},
 			"columnDelimiter": ",",
