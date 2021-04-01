@@ -17,8 +17,15 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "AzureTableSource",
-						"azureTableSourceIgnoreTableNotFound": false
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -43,7 +50,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "AzureTable2",
+						"referenceName": "DelimitedText6",
 						"type": "DatasetReference"
 					}
 				],
