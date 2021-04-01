@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "transacciones_rurales_r1r2_data_v1.csv",
 				"folderPath": "UPRA/MERCADO_TIERRAS/transacciones_rurales_r1r2_data_v1.csv",
 				"container": "gold"
 			},
