@@ -1,0 +1,125 @@
+{
+	"name": "Parquet2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "UPRA/MERCADO_TIERRAS/transacciones_rurales.parquet",
+				"container": "gold"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "pk",
+				"type": "UTF8"
+			},
+			{
+				"name": "COD_DANE",
+				"type": "UTF8"
+			},
+			{
+				"name": "ORIP",
+				"type": "UTF8"
+			},
+			{
+				"name": "MATRICULA_ORIP",
+				"type": "UTF8"
+			},
+			{
+				"name": "MATRICULA_NUMERO",
+				"type": "UTF8"
+			},
+			{
+				"name": "NRO_ANOTACION",
+				"type": "UTF8"
+			},
+			{
+				"name": "COD_NATURALEZA",
+				"type": "INT32"
+			},
+			{
+				"name": "TIPO_PREDIO",
+				"type": "UTF8"
+			},
+			{
+				"name": "SISTEMA",
+				"type": "UTF8"
+			},
+			{
+				"name": "ANIO_RADICACION",
+				"type": "INT64"
+			},
+			{
+				"name": "naturaleza_juridica",
+				"type": "UTF8"
+			},
+			{
+				"name": "cod_acto_registral",
+				"type": "UTF8"
+			},
+			{
+				"name": "nom_acto_registral",
+				"type": "UTF8"
+			},
+			{
+				"name": "total_intervinientes",
+				"type": "INT64"
+			},
+			{
+				"name": "TIPO_PAIS_NACIONAL",
+				"type": "INT64"
+			},
+			{
+				"name": "TIPO_PAIS_EXTRANJERO",
+				"type": "INT64"
+			},
+			{
+				"name": "ROL_DE",
+				"type": "INT64"
+			},
+			{
+				"name": "ROL_A",
+				"type": "INT64"
+			},
+			{
+				"name": "TIPO_INTERVINENTE_PERSONA",
+				"type": "INT64"
+			},
+			{
+				"name": "TIPO_INTERVINENTE_EMPRESA",
+				"type": "INT64"
+			},
+			{
+				"name": "SEXO_MASCULINO",
+				"type": "INT64"
+			},
+			{
+				"name": "SEXO_FEMENINO",
+				"type": "INT64"
+			},
+			{
+				"name": "cantidad_linderos",
+				"type": "INT64"
+			},
+			{
+				"name": "municipio",
+				"type": "UTF8"
+			},
+			{
+				"name": "departamento",
+				"type": "UTF8"
+			},
+			{
+				"name": "codigo_departamento",
+				"type": "UTF8"
+			}
+		]
+	}
+}
