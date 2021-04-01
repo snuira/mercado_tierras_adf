@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "part-00000-tid-6281928547121265276-8e2fa89d-8a83-4cbd-9887-9d7f3f28b338-4193-1-c000.snappy.parquet",
 				"folderPath": "UPRA/MERCADO_TIERRAS/transacciones_rurales.parquet",
 				"container": "gold"
 			},
